@@ -161,6 +161,15 @@
             #binding-cells = <0>;
             bindings = <&kp HOME>, <&kp LS(END)>;
         };
+
+        // Jump to the start of the current word, then select to its end --
+        // Sunaku's Cursor layer's "select word".
+        select_word: select_word_macro {
+            label = "SELECT_WORD";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LEFT)>, <&kp LC(LS(RIGHT))>;
+        };
     };
 
     // ZMK cannot detect the connected host's OS -- there is no such signal
@@ -213,22 +222,25 @@
         // Paste/Undo/Redo/Find are plain Ctrl-chords here (portable across
         // OSes); see macos_right_layer below for the one Mac-specific
         // override Sunaku's diagram calls for (Home/End -> Cmd+Left/Right).
-        // Thumb clusters stay &trans -- Sunaku repurposes his (Cursor is a
-        // dedicated key on his layout, freeing both thumb clusters for more
-        // shortcuts), but ours still carry Number/Caps Word/Lower/Function
-        // on the left and System/Caps/Symbol/Mouse/Magic on the right, all
-        // worth keeping reachable while browsing Cursor. One Sunaku cell
+        // Left thumb cluster stays &trans -- Sunaku's own left thumb is idle
+        // there too (his Cursor activation is a dedicated left-hand key,
+        // same physical role as our held Backspace, and he leaves the rest
+        // of that cluster grey). Right thumb cluster gets his selection
+        // shortcuts (Extend word/line, Select none/word/line/all) since his
+        // diagram populates all six positions there, including the one that
+        // doubles as this file's secondary `&mo MAGIC` key -- fine here
+        // since the primary Magic key (bottom-left corner, held via
+        // `&magic`) stays &trans and reachable throughout. One Sunaku cell
         // (left R6/outermost, "Search bar") was dropped rather than
-        // overriding the Magic key, which stays &trans here for the same
-        // reason as the thumb clusters.
+        // overriding *that* Magic key.
         cursor_layer {
             bindings = <
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
         &trans       &kp ESC      &kp INS      &kp LS(TAB)  &kp DEL      &kp LC(X)                                                    &trans       &trans       &trans       &trans       &trans       &trans
         &trans       &kp RET      &kp SPACE    &kp TAB      &kp BSPC     &kp LC(C)                                                    &kp LC(X)    &kp LS(TAB)  &kp LC(Z)    &kp LC(LS(Z)) &kp TAB     &trans
         &sk LSHFT    &kp LGUI     &kp LALT     &kp LCTRL    &kp LSHFT    &kp LC(V)                                                    &kp LC(C)    &kp LEFT     &kp UP       &kp DOWN     &kp RIGHT    &sk RSHFT
-        &kp LC(L)    &kp LC(A)    &select_line &kp LC(LS(RIGHT)) &kp LC(F) &trans      &trans       &trans       &trans       &trans       &trans       &trans       &kp LC(V)    &kp HOME     &kp PG_UP    &kp PG_DN    &kp END      &kp LC(L)
-        &trans       &kp LC(Z)    &kp LC(LS(Z)) &kp LS(F3)  &kp F3                   &trans       &trans       &trans       &trans       &trans       &trans                    &kp LC(F)    &kp LS(F3)   &kp F3       &kp LC(H)    &kp LC(K)
+        &kp LC(L)    &kp LC(A)    &select_line &select_word &kp LC(F)   &trans        &trans       &trans       &trans       &kp RIGHT    &kp LS(END)  &kp LC(LS(RIGHT)) &kp LC(V) &kp HOME     &kp PG_UP    &kp PG_DN    &kp END      &kp LC(L)
+        &trans       &kp LC(Z)    &kp LC(LS(Z)) &kp LS(F3)  &kp F3                   &trans       &trans       &trans       &kp LC(A)    &select_line &select_word              &kp LC(F)    &kp LS(F3)   &kp F3       &kp LC(H)    &kp LC(K)
             >;
         };
 
@@ -262,9 +274,12 @@
         // also carry Sunaku's "spacegram" fix: Space itself is busy being
         // held to reach this layer, so Space/Backspace/Tab/Enter/Del/Insert
         // get plain-tap duplicates on the home row so you don't have to let
-        // go of Space to use them. Thumb clusters are left &trans (Sunaku
-        // repurposes his for yet more symbols, but ours already carry
-        // Number/Caps Word/Lower/Function -- worth keeping reachable).
+        // go of Space to use them. Left thumb cluster gets Sunaku's extra
+        // symbols too (| . * % : @) -- his Symbol activation is a dedicated
+        // key, same as ours (Space), so his left thumb is just as idle as
+        // ours while Symbol is held, and he repurposes it. Right thumb
+        // cluster stays &trans (Sunaku's diagram leaves his idle too, aside
+        // from the activation key itself).
         // Two Sunaku cells were dropped as ambiguous rather than guessed at:
         // a two-dot glyph (left R6/outermost) and a triple-grave glyph
         // (right R4/outermost, both currently &trans / pass-through).
@@ -274,8 +289,8 @@
         &trans       &kp GRAVE    &kp LPAR     &kp RPAR     &kp SEMI     &kp COMMA                                                    &trans       &trans       &trans       &trans       &trans       &trans
         &kp EXCL     &kp LBKT     &kp LBRC     &kp RBRC     &kp RBKT     &kp QMARK                                                    &kp DOT      &kp DEL      &kp LS(TAB)  &kp INS      &kp ESC      &trans
         &kp HASH     &kp CARET    &kp EQUAL    &kp UNDER    &kp DLLR     &kp STAR                                                     &kp SQT      &kp BSPC     &kp TAB      &kp SPACE    &kp RET      &trans
-        &kp TILDE    &kp LT       &kp PIPE     &kp MINUS    &kp GT       &kp FSLH     &trans       &trans       &trans       &trans       &trans       &trans       &kp SEMI     &kp DQT      &kp SQT      &kp GRAVE    &kp BSLH     &sk RSHFT
-        &trans       &kp AMPS     &kp SQT      &kp DQT      &kp PLUS                 &trans       &trans       &trans       &trans       &trans       &trans                    &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI     &trans
+        &kp TILDE    &kp LT       &kp PIPE     &kp MINUS    &kp GT       &kp FSLH     &kp PIPE     &kp DOT      &kp STAR     &trans       &trans       &trans       &kp SEMI     &kp DQT      &kp SQT      &kp GRAVE    &kp BSLH     &sk RSHFT
+        &trans       &kp AMPS     &kp SQT      &kp DQT      &kp PLUS                 &kp PRCNT    &kp COLON    &kp AT       &trans       &trans       &trans                    &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI     &trans
             >;
         };
 

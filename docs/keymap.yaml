@@ -85,15 +85,15 @@ layers:
     - Ctl+L
     - Ctl+A
   - - '&select_line'
-    - Ctl+Sft+RIGHT
+    - '&select_word'
     - Ctl+F
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - RIGHT
+    - Sft+END
+    - Ctl+Sft+RIGHT
     - Ctl+V
     - HOME
   - - PG UP
@@ -108,12 +108,7 @@ layers:
     - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - Ctl+F
-    - Sft+F3
-    - F3
+  - [Ctl+A, '&select_line', '&select_word', Ctl+F, Sft+F3, F3]
   - [Ctl+H, Ctl+K]
   number:
   - - {t: ▽, type: trans}
@@ -311,13 +306,8 @@ layers:
     - {t: ▽, type: trans}
     - '~'
     - <
-  - - '|'
-    - '-'
-    - '>'
-    - /
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
+  - ['|', '-', '>', /, '|', .]
+  - - '*'
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -329,12 +319,7 @@ layers:
     - {t: RSHFT, h: sticky}
     - {t: ▽, type: trans}
     - '&'
-  - - ''''
-    - '"'
-    - +
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+  - ['''', '"', +, '%', ':', '@']
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {type: held}

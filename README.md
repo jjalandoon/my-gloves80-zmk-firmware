@@ -105,20 +105,27 @@ the ground truth for which physical key is which (that mapping is what makes row
 diverge from a naive "same key = same symbol" copy: Sunaku's own diagrams are drawn for
 his hardware's row/column layout, not this file's).
 
-A few deliberate departures from a pixel-exact copy:
+Thumb clusters are transcribed too, not skipped -- both Sunaku's Symbol and Cursor
+diagrams populate exactly the thumb keys that are idle *on his own layout* while that
+layer is held (his activation key is a single dedicated thumb key on each layer, same
+role as this keymap's held Space/Backspace), so the same logic carries over key-for-key:
 
-- **Both hands' thumb clusters stay `&trans`.** Sunaku repurposes his thumb clusters
-  for extra symbols/shortcuts while Symbol or Cursor is held, because his layout
-  reaches those layers via one dedicated thumb key, leaving the rest of both thumb
-  clusters idle. This keymap reaches Symbol/Cursor by holding Space/Backspace
-  themselves (see above), so the thumb clusters still carry Number/Caps Word/Lower/
-  Function/System/Caps/Mouse/Magic and are worth keeping reachable.
-- **The Magic key position always stays `&trans`**, even where Sunaku's diagram has
-  something there, for the same reason -- you should always be able to reach Magic.
-- Two visually ambiguous glyphs in Sunaku's Symbol diagram (a two-dot mark, a
-  triple-grave mark) and one duplicate shortcut in his Cursor diagram ("Search bar",
-  dropped because its cell is the Magic-key position) were left out rather than
-  guessed at.
+- **Symbol**: left thumb cluster gets his extra symbols (`| . * % : @`) since Symbol's
+  activation (Space, right hand) leaves the whole left thumb idle here too. Right thumb
+  cluster stays `&trans` -- his own right thumb is idle there as well, aside from the
+  activation key itself.
+- **Cursor**: right thumb cluster gets his selection shortcuts (Extend word/line,
+  Select none/word/line/all) since Cursor's activation (Backspace, left hand) leaves
+  the whole right thumb idle here too -- including the key that doubles as this
+  keymap's secondary `&mo MAGIC` thumb key, which is fine because the *primary* Magic
+  key (bottom-left corner, `&magic`) is never touched by any overlay layer and stays
+  reachable throughout. Left thumb cluster stays `&trans` -- his own left thumb is idle
+  there too, aside from the activation key.
+
+A few cells were left out rather than guessed at: two visually ambiguous glyphs in
+Sunaku's Symbol diagram (a two-dot mark, a triple-grave mark), and one duplicate
+shortcut in his Cursor diagram ("Search bar", whose cell is the primary Magic key's
+position).
 - Sunaku's Cursor layer hardcodes Home/End as Cmd+Left/Right. This keymap's base
   `cursor_layer` keeps them OS-portable (plain Home/End) and applies that swap only
   under the macOS overlay (`macos_right_layer`), consistent with how the rest of this
