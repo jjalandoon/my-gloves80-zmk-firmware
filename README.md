@@ -12,9 +12,13 @@ importing a layout through MoErgo's web editor.
 [tailorkey]: https://sites.google.com/view/tailorkey/moergo/glove80
 [sunaku]: https://github.com/sunaku/glove80-keymaps
 
+Just the everyday typing layer, on the physical keyboard:
+
+![Default layer](docs/keymap-default.png)
+
 A full visual reference of every layer is in [`docs/keymap.png`](docs/keymap.png)
 (`docs/keymap-compact.png` is the same thing with the three near-empty macOS
-sub-overlay layers omitted). Regenerate it any time with:
+sub-overlay layers omitted). Regenerate all of these any time with:
 
 ```sh
 pip install --user keymap-drawer
@@ -22,9 +26,11 @@ keymap parse -z config/glove80.keymap -c 6 -o docs/keymap.yaml
 # docs/keymap.yaml's `layout:` line points at config/info.json (Glove80's real
 # physical key positions) -- keep that line as-is when re-parsing.
 keymap draw docs/keymap.yaml -o docs/keymap.svg
+keymap draw docs/keymap.yaml -s default -o docs/keymap-default.svg
 # any SVG->PNG rasterizer with real CSS support works; resvg-cli renders it
 # correctly, cairosvg does not (it drops the class-based key styling):
 npx --yes resvg-cli --fit-width 2000 --background white docs/keymap.svg docs/keymap.png
+npx --yes resvg-cli --fit-width 2000 --background white docs/keymap-default.svg docs/keymap-default.png
 ```
 
 ## Building / flashing
