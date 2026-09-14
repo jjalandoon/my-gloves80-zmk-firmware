@@ -94,6 +94,42 @@ its shifted/symbol form) and a Typing layer (temporarily disables home row mods 
 touch-typing practice) -- both left out here to keep this keymap's behavior predictable
 and easy to reason about; add them later if you want them.
 
+## Symbol and Cursor layer contents
+
+TailorKey states its Symbol and Cursor layers are built directly on
+[Sunaku's own Symbol][sunaku-symbol] and [Cursor][sunaku-cursor] layer designs (same
+source as the bilateral-mods technique above). This repo's `symbol_layer` and
+`cursor_layer` bodies are transcribed from Sunaku's published layer diagrams,
+key-position-for-key-position, using `config/info.json`'s `L_C#R#`/`R_C#R#` labels as
+the ground truth for which physical key is which (that mapping is what makes rows 2-6
+diverge from a naive "same key = same symbol" copy: Sunaku's own diagrams are drawn for
+his hardware's row/column layout, not this file's).
+
+A few deliberate departures from a pixel-exact copy:
+
+- **Both hands' thumb clusters stay `&trans`.** Sunaku repurposes his thumb clusters
+  for extra symbols/shortcuts while Symbol or Cursor is held, because his layout
+  reaches those layers via one dedicated thumb key, leaving the rest of both thumb
+  clusters idle. This keymap reaches Symbol/Cursor by holding Space/Backspace
+  themselves (see above), so the thumb clusters still carry Number/Caps Word/Lower/
+  Function/System/Caps/Mouse/Magic and are worth keeping reachable.
+- **The Magic key position always stays `&trans`**, even where Sunaku's diagram has
+  something there, for the same reason -- you should always be able to reach Magic.
+- Two visually ambiguous glyphs in Sunaku's Symbol diagram (a two-dot mark, a
+  triple-grave mark) and one duplicate shortcut in his Cursor diagram ("Search bar",
+  dropped because its cell is the Magic-key position) were left out rather than
+  guessed at.
+- Sunaku's Cursor layer hardcodes Home/End as Cmd+Left/Right. This keymap's base
+  `cursor_layer` keeps them OS-portable (plain Home/End) and applies that swap only
+  under the macOS overlay (`macos_right_layer`), consistent with how the rest of this
+  keymap handles OS differences.
+- Sunaku's Cut/Copy/Paste/Undo/Redo/Find/etc. cells are implemented as plain
+  `LC(...)` (Ctrl) chords rather than his exact custom macros, which aren't fully
+  recoverable from a diagram alone.
+
+[sunaku-symbol]: https://sunaku.github.io/moergo-glove80-keyboard.html#symbol-layer
+[sunaku-cursor]: https://sunaku.github.io/moergo-glove80-keyboard.html#cursor-layer
+
 ## OS switching
 
 ZMK has no way to detect which OS the connected host is running -- there's no such

@@ -57,17 +57,11 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - ESC
+  - - INS
+    - Sft+TAB
+    - DEL
+    - Ctl+X
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
@@ -75,22 +69,24 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - INS
-  - - PG UP
-    - HOME
+    - RET
+  - [SPACE, TAB, BSPC, Ctl+C, Ctl+X, Sft+TAB]
+  - - Ctl+Z
+    - Ctl+Sft+Z
+    - TAB
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - LEFT
-  - - DOWN
-    - UP
+    - {t: LSHFT, h: sticky}
+    - LGUI
+  - [LALT, LCTRL, LSHFT, Ctl+V, Ctl+C, LEFT]
+  - - UP
+    - DOWN
     - RIGHT
+    - {t: RSHFT, h: sticky}
+    - Ctl+L
+    - Ctl+A
+  - - '&select_line'
+    - Ctl+Sft+RIGHT
+    - Ctl+F
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -98,34 +94,27 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - Ctl+LEFT
-  - - PG DN
+    - Ctl+V
+    - HOME
+  - - PG UP
+    - PG DN
     - END
-    - Ctl+RIGHT
+    - Ctl+L
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - Ctl+Z
+  - - Ctl+Sft+Z
+    - Sft+F3
+    - F3
     - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - Ctl+F
+    - Sft+F3
+    - F3
+  - [Ctl+H, Ctl+K]
   number:
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -294,60 +283,65 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - '~'
-    - '!'
-  - ['@', '#', $, '%', ^, '&']
-  - - KP MULTIPLY
-    - (
+    - {t: ▽, type: trans}
+    - '`'
+  - - (
     - )
-    - '|'
-    - {t: ▽, type: trans}
-    - '{'
-  - ['}', (, ), '`', _, +]
-  - - '['
-    - ']'
-    - \
+    - ;
+    - ','
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
+  - - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - '!'
+    - '['
+  - ['{', '}', ']', '?', ., DEL]
+  - - Sft+TAB
+    - INS
+    - ESC
+    - {t: ▽, type: trans}
+    - '#'
+    - ^
+  - ['=', _, $, '*', '''', BSPC]
+  - - TAB
+    - SPACE
+    - RET
+    - {t: ▽, type: trans}
+    - '~'
     - <
-  - ['>', '[', ']', '=', '-', '*']
-  - - '{'
-    - '}'
-    - ':'
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - ''''
-    - '"'
-  - - ;
-    - '?'
+  - - '|'
+    - '-'
+    - '>'
     - /
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - ;
+    - '"'
+  - - ''''
+    - '`'
+    - \
+    - {t: RSHFT, h: sticky}
+    - {t: ▽, type: trans}
+    - '&'
+  - - ''''
+    - '"'
+    - +
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {type: held}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-  - - {t: ▽, type: trans}
+    - LSHFT
+    - LCTRL
+    - LALT
+  - - LGUI
     - {t: ▽, type: trans}
   mouse:
   - - {t: ▽, type: trans}
@@ -865,10 +859,10 @@ layers:
     - {t: ▽, type: trans}
     - {type: held}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - Gui+LEFT
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - Gui+RIGHT
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}

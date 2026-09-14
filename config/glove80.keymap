@@ -152,6 +152,15 @@
                 = <&to DEFAULT>,
                   <&rgb_ug RGB_COLOR_HSB(190,90,35)>;
         };
+
+        // Select from line start to line end -- ZMK has no built-in
+        // "select line", Sunaku's Cursor layer expects one.
+        select_line: select_line_macro {
+            label = "SELECT_LINE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp HOME>, <&kp LS(END)>;
+        };
     };
 
     // ZMK cannot detect the connected host's OS -- there is no such signal
@@ -198,14 +207,28 @@
             >;
         };
 
+        // Sunaku's actual Cursor layer (https://sunaku.github.io/moergo-glove80-keyboard.html#cursor-layer),
+        // which TailorKey's own Cursor layer is explicitly built on -- same
+        // physical row/column mapping approach as Symbol above. Cut/Copy/
+        // Paste/Undo/Redo/Find are plain Ctrl-chords here (portable across
+        // OSes); see macos_right_layer below for the one Mac-specific
+        // override Sunaku's diagram calls for (Home/End -> Cmd+Left/Right).
+        // Thumb clusters stay &trans -- Sunaku repurposes his (Cursor is a
+        // dedicated key on his layout, freeing both thumb clusters for more
+        // shortcuts), but ours still carry Number/Caps Word/Lower/Function
+        // on the left and System/Caps/Symbol/Mouse/Magic on the right, all
+        // worth keeping reachable while browsing Cursor. One Sunaku cell
+        // (left R6/outermost, "Search bar") was dropped rather than
+        // overriding the Magic key, which stays &trans here for the same
+        // reason as the thumb clusters.
         cursor_layer {
             bindings = <
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp INS      &kp PG_UP    &kp HOME     &trans       &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT    &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp LC(LEFT) &kp PG_DN    &kp END      &kp LC(RIGHT) &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
+        &trans       &kp ESC      &kp INS      &kp LS(TAB)  &kp DEL      &kp LC(X)                                                    &trans       &trans       &trans       &trans       &trans       &trans
+        &trans       &kp RET      &kp SPACE    &kp TAB      &kp BSPC     &kp LC(C)                                                    &kp LC(X)    &kp LS(TAB)  &kp LC(Z)    &kp LC(LS(Z)) &kp TAB     &trans
+        &sk LSHFT    &kp LGUI     &kp LALT     &kp LCTRL    &kp LSHFT    &kp LC(V)                                                    &kp LC(C)    &kp LEFT     &kp UP       &kp DOWN     &kp RIGHT    &sk RSHFT
+        &kp LC(L)    &kp LC(A)    &select_line &kp LC(LS(RIGHT)) &kp LC(F) &trans      &trans       &trans       &trans       &trans       &trans       &trans       &kp LC(V)    &kp HOME     &kp PG_UP    &kp PG_DN    &kp END      &kp LC(L)
+        &trans       &kp LC(Z)    &kp LC(LS(Z)) &kp LS(F3)  &kp F3                   &trans       &trans       &trans       &trans       &trans       &trans                    &kp LC(F)    &kp LS(F3)   &kp F3       &kp LC(H)    &kp LC(K)
             >;
         };
 
@@ -231,14 +254,28 @@
             >;
         };
 
+        // Sunaku's actual Symbol layer (https://sunaku.github.io/moergo-glove80-keyboard.html#symbol-layer),
+        // which TailorKey's own Symbol layer is explicitly built on. Mapped
+        // by physical row/column onto this file's layout, not by borrowed
+        // semantics -- e.g. row4 is wherever the home row lives here, not
+        // "wherever Sunaku's A/S/D/F happen to sit". Right-hand row3/row4
+        // also carry Sunaku's "spacegram" fix: Space itself is busy being
+        // held to reach this layer, so Space/Backspace/Tab/Enter/Del/Insert
+        // get plain-tap duplicates on the home row so you don't have to let
+        // go of Space to use them. Thumb clusters are left &trans (Sunaku
+        // repurposes his for yet more symbols, but ours already carry
+        // Number/Caps Word/Lower/Function -- worth keeping reachable).
+        // Two Sunaku cells were dropped as ambiguous rather than guessed at:
+        // a two-dot glyph (left R6/outermost) and a triple-grave glyph
+        // (right R4/outermost, both currently &trans / pass-through).
         symbol_layer {
             bindings = <
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
-        &kp TILDE    &kp EXCL     &kp AT       &kp HASH     &kp DLLR     &kp PRCNT    &kp CARET    &kp AMPS     &kp KP_MULTIPLY &kp LPAR  &kp RPAR     &kp PIPE
-        &trans       &kp LBRC     &kp RBRC     &kp LPAR     &kp RPAR     &kp GRAVE    &kp UNDER    &kp PLUS     &kp LBKT     &kp RBKT     &kp BSLH     &trans
-        &trans       &kp LT       &kp GT       &kp LBKT     &kp RBKT     &kp EQUAL    &kp MINUS    &kp STAR     &kp LBRC     &kp RBRC     &kp COLON    &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp SQT      &kp DQT      &kp SEMI     &kp QMARK    &kp FSLH     &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
+        &trans       &kp GRAVE    &kp LPAR     &kp RPAR     &kp SEMI     &kp COMMA                                                    &trans       &trans       &trans       &trans       &trans       &trans
+        &kp EXCL     &kp LBKT     &kp LBRC     &kp RBRC     &kp RBKT     &kp QMARK                                                    &kp DOT      &kp DEL      &kp LS(TAB)  &kp INS      &kp ESC      &trans
+        &kp HASH     &kp CARET    &kp EQUAL    &kp UNDER    &kp DLLR     &kp STAR                                                     &kp SQT      &kp BSPC     &kp TAB      &kp SPACE    &kp RET      &trans
+        &kp TILDE    &kp LT       &kp PIPE     &kp MINUS    &kp GT       &kp FSLH     &trans       &trans       &trans       &trans       &trans       &trans       &kp SEMI     &kp DQT      &kp SQT      &kp GRAVE    &kp BSLH     &sk RSHFT
+        &trans       &kp AMPS     &kp SQT      &kp DQT      &kp PLUS                 &trans       &trans       &trans       &trans       &trans       &trans                    &kp LSHFT    &kp LCTRL    &kp LALT     &kp LGUI     &trans
             >;
         };
 
@@ -333,13 +370,17 @@
             >;
         };
 
+        // Cursor layer's Home/End (R_C2R5/R_C5R5) become Cmd+Left/Right under
+        // macOS, matching Sunaku's Cursor-layer diagram, which hardcodes
+        // this -- our own dual-OS design keeps the base cursor_layer OS-
+        // portable (plain Home/End) and applies the Mac-only swap here.
         macos_right_layer {
             bindings = <
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
-        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
+        &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &kp LG(LEFT) &trans       &trans       &kp LG(RIGHT) &trans
         &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
             >;
         };
