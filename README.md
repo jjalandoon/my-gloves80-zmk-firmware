@@ -22,15 +22,21 @@ sub-overlay layers omitted). Regenerate all of these any time with:
 
 ```sh
 pip install --user keymap-drawer
-keymap parse -z config/glove80.keymap -c 6 -o docs/keymap.yaml
+# -c docs/keymap-drawer.config.yaml gives custom behaviors (Caps Word, Lower,
+# the OS-select/RGB-status/select-line/select-word macros, ...) readable
+# labels instead of their raw &behavior_name; -- see that file to add more.
+keymap -c docs/keymap-drawer.config.yaml parse -z config/glove80.keymap -c 6 -o docs/keymap.yaml
 # docs/keymap.yaml's `layout:` line points at config/info.json (Glove80's real
 # physical key positions) -- keep that line as-is when re-parsing.
 keymap draw docs/keymap.yaml -o docs/keymap.svg
 keymap draw docs/keymap.yaml -s default -o docs/keymap-default.svg
+# compact = full reference minus the three near-empty macOS sub-overlay layers:
+keymap draw docs/keymap.yaml -s default cursor number function symbol mouse system lower magic factory macos -o docs/keymap-compact.svg
 # any SVG->PNG rasterizer with real CSS support works; resvg-cli renders it
 # correctly, cairosvg does not (it drops the class-based key styling):
 npx --yes resvg-cli --fit-width 2000 --background white docs/keymap.svg docs/keymap.png
 npx --yes resvg-cli --fit-width 2000 --background white docs/keymap-default.svg docs/keymap-default.png
+npx --yes resvg-cli --fit-width 2000 --background white docs/keymap-compact.svg docs/keymap-compact.png
 ```
 
 ## Building / flashing

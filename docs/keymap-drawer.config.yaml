@@ -1,0 +1,16 @@
+# Friendly keycap-style labels for this keymap's custom behaviors, so
+# docs/keymap*.png read as "what to put on this key" instead of showing raw
+# ZMK behavior names. raw_binding_map is applied at *parse* time (see
+# README.md's regeneration instructions -- pass this to `keymap parse`, not
+# `keymap draw`).
+parse_config:
+  raw_binding_map:
+    "&caps_word": Caps Word
+    "&lower_td": Lower
+    "&os_to_linux": "OS:\nLinux"
+    "&os_to_macos": "OS:\nmacOS"
+    "&rgb_ug_status_macro": RGB Status
+    "&select_line": Select Line
+    "&select_word": Select Word
+    "&bootloader": Bootloader
+    "&sys_reset": Reset

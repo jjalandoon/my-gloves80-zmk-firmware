@@ -24,13 +24,13 @@ layers:
     - ''''
     - '`'
     - Z
-  - [X, C, V, B, number, '&caps_word']
-  - ['&lower_td', CAPS, '', system, N, M]
+  - [X, C, V, B, number, Caps Word]
+  - [Lower, CAPS, '', system, N, M]
   - - ','
     - .
     - /
     - PG UP
-    - {t: '&rgb_ug_status_macro', h: magic}
+    - {t: RGB Status, h: magic}
     - HOME
   - - END
     - LEFT
@@ -84,8 +84,8 @@ layers:
     - {t: RSHFT, h: sticky}
     - Ctl+L
     - Ctl+A
-  - - '&select_line'
-    - '&select_word'
+  - - Select Line
+    - Select Word
     - Ctl+F
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -108,7 +108,7 @@ layers:
     - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-  - [Ctl+A, '&select_line', '&select_word', Ctl+F, Sft+F3, F3]
+  - [Ctl+A, Select Line, Select Word, Ctl+F, Sft+F3, F3]
   - [Ctl+H, Ctl+K]
   number:
   - - {t: ▽, type: trans}
@@ -552,7 +552,11 @@ layers:
   - - KP ENTER
     - {t: ▽, type: trans}
   magic:
-  - [BT CLR, '', '&os_to_linux', '&os_to_macos', '', '']
+  - [BT CLR, '', 'OS:
+
+      Linux', 'OS:
+
+      macOS', '', '']
   - - ''
     - ''
     - {t: default, h: toggle}
@@ -571,10 +575,10 @@ layers:
     - {t: cursor, h: toggle}
     - {t: symbol, h: toggle}
     - {t: mouse, h: toggle}
-    - '&bootloader'
+    - Bootloader
     - RGB SPD
   - [RGB SAD, RGB HUD, RGB BRD, RGB EFF, '', '']
-  - ['', '', '', '&bootloader', '&sys_reset', '']
+  - ['', '', '', Bootloader, Reset, '']
   - - ''
     - ''
     - ''
@@ -590,7 +594,7 @@ layers:
   - - ''
     - ''
     - ''
-    - '&sys_reset'
+    - Reset
     - {type: held}
     - ''
   - - ''
