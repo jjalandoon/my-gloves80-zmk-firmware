@@ -2,11 +2,14 @@
 
 A [ZMK](https://zmk.dev) keymap for the [MoErgo Glove80](https://www.moergo.com/) split
 keyboard with a **runtime** macOS/Linux mode switch, bilateral-combination home row
-mods, and OS-aware RGB underglow. Layout ideas, the bilateral-mods technique, and the
-OS-overlay-layer pattern are adapted from [sunaku/glove80-keymaps][sunaku], trimmed
-down and rebuilt as a plain, from-scratch, CI-buildable ZMK config (sunaku's own repo
-is a set of Ruby templates pasted into MoErgo's web editor, not a buildable config).
+mods, and OS-aware RGB underglow. The home-row-mod/dual-OS design and the
+hold-Space/Backspace/Enter layer-access pattern follow [TailorKey][tailorkey], a
+zero-code Glove80 layout; the underlying bilateral-mods technique it (and this repo)
+use was itself originated by [sunaku/glove80-keymaps][sunaku]. This repo re-implements
+those ideas from scratch as a plain, from-scratch, CI-buildable ZMK config, rather than
+importing a layout through MoErgo's web editor.
 
+[tailorkey]: https://sites.google.com/view/tailorkey/moergo/glove80
 [sunaku]: https://github.com/sunaku/glove80-keymaps
 
 A full visual reference of every layer is in [`docs/keymap.png`](docs/keymap.png)
@@ -47,15 +50,15 @@ rather not wait on CI.
 
 | # | Layer | Access | Contents |
 |---|-------|--------|----------|
-| 0 | `default` | base | QWERTY + bilateral home row mods |
-| 1 | `cursor` | hold left thumb (`&mo CURSOR`) | arrows, page up/down, word-left/right, insert |
+| 0 | `default` | base | QWERTY + bilateral home row mods, Caps Word, Caps Lock |
+| 1 | `cursor` | **hold Backspace** (`&lt_tp CURSOR BSPC`) | arrows, page up/down, word-left/right, insert |
 | 2 | `number` | hold left thumb (`&mo NUMBER`) | numpad on the right hand |
 | 3 | `function` | hold left thumb (`&mo FUNCTION`) | F11-F20 |
-| 4 | `symbol` | tap/hold `&symbol_td` | `!@#$%^&*()[]{}` etc. |
-| 5 | `mouse` | hold right thumb (`&mo MOUSE`) | pointer move/click/scroll |
+| 4 | `symbol` | **hold Space** (`&lt_tp SYMBOL SPACE`) | `!@#$%^&*()[]{}` etc. |
+| 5 | `mouse` | **hold Enter** (`&lt_tp MOUSE RET`) | pointer move/click/scroll |
 | 6 | `system` | hold right thumb (`&mo SYSTEM`) | media keys, BT profile select, output select |
 | 7 | `lower` | tap/hold `&lower_td` | secondary numpad/nav/media, mirrors stock MoErgo Lower |
-| 8 | `magic` | hold outer-corner key (`&magic`) | BT/RGB controls, **OS mode select**, bootloader/reset, Factory escape hatch |
+| 8 | `magic` | hold outer-corner key (`&magic`) | BT/RGB controls, **OS mode select**, **layer-switcher row**, bootloader/reset, Factory escape hatch |
 | 9 | `factory` | `&to FACTORY` from Magic | plain QWERTY, no mods, no custom layers -- safety net |
 | 10 | `macos` | `&to MACOS` / `&to DEFAULT` (Magic layer) | OS overlay, see below |
 | 11 | `macos_left` | automatic (macOS + Cursor/Number/Function) | reserved for future Mac-specific left-hand tweaks |
@@ -63,6 +66,33 @@ rather not wait on CI.
 | 13 | `macos_lower` | automatic (macOS + Lower) | reserved for future Mac-specific Lower tweaks |
 
 No gaming layer, per your request.
+
+## TailorKey-style layer access
+
+Cursor, Symbol, and Mouse each moved off a dedicated thumb key onto **Space,
+Backspace, and Enter themselves** -- tap Space/Backspace/Enter for the normal
+keystroke, *hold* one solo to reach its layer. This is [TailorKey][tailorkey]'s
+signature move (it does the same with its own hold-Space/hold-Backspace/hold-Enter
+layers) and it's implemented here with a dedicated `lt_tp` (layer-tap,
+`flavor = "tap-preferred"`) hold-tap behavior in `config/glove80.keymap`:
+`tap-preferred` resolves as a plain tap the instant another key is pressed, so rolling
+through Space/Backspace/Enter during normal typing never misfires a layer -- only a
+deliberate solo hold does.
+
+That freed three thumb keys, now Caps Word and Caps Lock (one spare, currently
+`&none`) -- TailorKey has the same two behind thumb-key combos; here they're plain taps
+instead.
+
+The Magic layer also gained a **layer-switcher row** (right side of row 3): hold Magic
+and tap `to NUMBER` / `to FUNCTION` / `to SYSTEM` / `to CURSOR` / `to SYMBOL` /
+`to MOUSE` to jump straight to (and persist on) any of those layers without holding
+anything, mirroring TailorKey's Magic-layer quick-access shortcuts. `to DEFAULT` (Magic
+layer, top-right) gets you back.
+
+[TailorKey][tailorkey] also documents an optional AutoShift layer (tap = letter, hold =
+its shifted/symbol form) and a Typing layer (temporarily disables home row mods for
+touch-typing practice) -- both left out here to keep this keymap's behavior predictable
+and easy to reason about; add them later if you want them.
 
 ## OS switching
 

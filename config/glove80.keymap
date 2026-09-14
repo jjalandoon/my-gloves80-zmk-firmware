@@ -96,13 +96,21 @@
             bindings = <&mo LOWER>, <&to LOWER>;
         };
 
-        // Tap = momentary Symbol, double-tap = back to Default (mirrors lower_td).
-        symbol_td: symbol_tap_dance {
-            compatible = "zmk,behavior-tap-dance";
-            label = "SYMBOL_TAP_DANCE";
-            #binding-cells = <0>;
+        // TailorKey-style layer-tap: tap = the key's normal keycode, hold =
+        // a layer. "tap-preferred" resolves as a tap the instant another key
+        // is pressed, so fast typing/rolling through Space/Backspace/Enter
+        // never misfires a layer -- only a deliberate solo hold does. This
+        // is how TailorKey (https://sites.google.com/view/tailorkey/moergo/glove80)
+        // reaches Symbol/Cursor/Mouse: hold Space/Backspace/Enter instead of
+        // spending dedicated thumb keys on them.
+        lt_tp: layer_tap_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LAYER_TAP_PREFERRED";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
             tapping-term-ms = <200>;
-            bindings = <&mo SYMBOL>, <&to DEFAULT>;
+            quick-tap-ms = <175>;
+            bindings = <&mo>, <&kp>;
         };
 
         // Hold = momentary Magic layer, tap = show RGB/battery status (stock MoErgo behavior).
@@ -172,16 +180,21 @@
         // |  =    |  1  |  2  |  3   |  4   |  5   |                                                 |  6   |   7   |   8   |  9   |   0   |   -  |
         // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                                                 |  Y   |   U   |   I   |  O   |   P   |   \  |
         // |  ESC  | GUI/A|ALT/S|CTRL/D|SHFT/F|  G   |                                                 |  H   |SHFT/J |CTRL/K |ALT/L |GUI/;  |   '  |
-        // |   `   |  Z  |  X  |  C   |  V   |  B   |NUMBER |CURSOR |LOWERtd| |SYMBOLtd|MOUSE |SYSTEM |  N   |   M   |   ,   |  .   |   /   | PGUP |
-        // |MAGIC/RGB|HOME| END | LEFT|RIGHT |      | BSPC  | DEL   |FUNCTION| |MAGIC | RET  | SPACE |      |  UP   | DOWN  |  [   |   ]   | PGDN |
+        // |   `   |  Z  |  X  |  C   |  V   |  B   |NUMBER |CAPSWORD|LOWERtd| |CAPS  |  --  |SYSTEM |  N   |   M   |   ,   |  .   |   /   | PGUP |
+        // |MAGIC/RGB|HOME| END | LEFT|RIGHT |      |BSPC/CURSOR|DEL|FUNCTION| |MAGIC |RET/MOUSE|SPACE/SYMBOL| |  UP   | DOWN  |  [   |   ]   | PGDN |
+        //
+        // TailorKey-style layer access: Cursor/Mouse/Symbol have no dedicated
+        // thumb key -- hold Backspace/Enter/Space instead (see lt_tp above).
+        // That frees three thumb keys for Caps Word and Caps Lock (`--` is a
+        // spare, currently &none).
         default_layer {
             bindings = <
         &kp F1       &kp F2       &kp F3      &kp F4      &kp F5                                                                          &kp F6  &kp F7      &kp F8      &kp F9      &kp F10
         &kp EQUAL    &kp N1       &kp N2      &kp N3      &kp N4      &kp N5                                                        &kp N6  &kp N7  &kp N8      &kp N9      &kp N0      &kp MINUS
         &kp TAB      &kp Q        &kp W       &kp E       &kp R       &kp T                                                         &kp Y   &kp U   &kp I       &kp O       &kp P       &kp BSLH
         &kp ESC      &hml LGUI A  &hml LALT S &hml LCTRL D &hml LSHFT F &kp G                                                        &kp H   &hmr LSHFT J &hmr LCTRL K &hmr LALT L &hmr LGUI SEMI &kp SQT
-        &kp GRAVE    &kp Z        &kp X       &kp C       &kp V       &kp B    &mo NUMBER &mo CURSOR &lower_td   &symbol_td &mo MOUSE &mo SYSTEM  &kp N   &kp M   &kp COMMA   &kp DOT     &kp FSLH    &kp PG_UP
-        &magic MAGIC 0 &kp HOME   &kp END     &kp LEFT    &kp RIGHT           &kp BSPC   &kp DEL    &mo FUNCTION &mo MAGIC &kp RET   &kp SPACE           &kp UP  &kp DOWN    &kp LBKT    &kp RBKT    &kp PG_DN
+        &kp GRAVE    &kp Z        &kp X       &kp C       &kp V       &kp B    &mo NUMBER &caps_word &lower_td   &kp CAPS &none &mo SYSTEM  &kp N   &kp M   &kp COMMA   &kp DOT     &kp FSLH    &kp PG_UP
+        &magic MAGIC 0 &kp HOME   &kp END     &kp LEFT    &kp RIGHT           &lt_tp CURSOR BSPC   &kp DEL    &mo FUNCTION &mo MAGIC &lt_tp MOUSE RET   &lt_tp SYMBOL SPACE           &kp UP  &kp DOWN    &kp LBKT    &kp RBKT    &kp PG_DN
             >;
         };
 
@@ -262,11 +275,17 @@
             >;
         };
 
+        // Right side of row 3 is a TailorKey-style "layer switcher" row:
+        // hold Magic, tap one of these to jump straight to (and persist on)
+        // a layer that would otherwise need a hold -- handy for Cursor/
+        // Symbol/Mouse now that they live on held Backspace/Space/Enter
+        // instead of a dedicated thumb key. `&to X` a second time (or
+        // `&to DEFAULT`/the layer's own escape) is how you leave again.
         magic_layer {
             bindings = <
-        &bt BT_CLR   &none        &os_to_linux &os_to_macos &none                                                                          &none        &none        &none        &none        &bt BT_CLR_ALL
+        &bt BT_CLR   &none        &os_to_linux &os_to_macos &none                                                                          &none        &none        &none        &to DEFAULT  &bt BT_CLR_ALL
         &none        &none        &none        &none        &none        &none                                                       &none        &none        &none        &none        &none        &none
-        &none        &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG                                    &none        &none        &none        &none        &none        &none
+        &none        &rgb_ug RGB_SPI &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG                                    &to NUMBER   &to FUNCTION &to SYSTEM   &to CURSOR   &to SYMBOL   &to MOUSE
         &bootloader  &rgb_ug RGB_SPD &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF                                    &none        &none        &none        &none        &none        &bootloader
         &sys_reset   &none        &none        &none        &none        &none        &bt BT_SEL 2 &bt BT_SEL 3 &to FACTORY  &none        &none        &none        &none        &none        &none        &none        &none        &sys_reset
         &none        &none        &none        &none        &none                    &bt BT_SEL 0 &bt BT_SEL 1 &out OUT_USB &none        &none        &none                     &none        &none        &none        &none        &to FACTORY

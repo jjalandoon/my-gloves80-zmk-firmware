@@ -24,16 +24,26 @@ layers:
     - ''''
     - '`'
     - Z
-  - [X, C, V, B, number, cursor]
-  - ['&lower_td', '&symbol_td', mouse, system, N, M]
+  - [X, C, V, B, number, '&caps_word']
+  - ['&lower_td', CAPS, '', system, N, M]
   - - ','
     - .
     - /
     - PG UP
     - {t: '&rgb_ug_status_macro', h: magic}
     - HOME
-  - [END, LEFT, RIGHT, BSPC, DEL, function]
-  - [magic, RET, SPACE, UP, DOWN, '[']
+  - - END
+    - LEFT
+    - RIGHT
+    - {t: BSPC, h: cursor}
+    - DEL
+    - function
+  - - magic
+    - {t: RET, h: mouse}
+    - {t: SPACE, h: symbol}
+    - UP
+    - DOWN
+    - '['
   - [']', PG DN]
   cursor:
   - - {t: ▽, type: trans}
@@ -89,7 +99,7 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {type: held}
+    - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -105,7 +115,7 @@ layers:
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
@@ -333,7 +343,7 @@ layers:
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
@@ -396,7 +406,7 @@ layers:
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
     - '&mkp LCLK'
-    - {t: '&mkp MCLK', type: held}
+    - '&mkp MCLK'
     - '&mkp RCLK'
     - '&msc SCRL_UP'
     - {t: ▽, type: trans}
@@ -413,7 +423,7 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   - - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - {type: held}
     - {t: ▽, type: trans}
     - '&msc SCRL_DOWN'
     - {t: ▽, type: trans}
@@ -564,11 +574,26 @@ layers:
     - {t: ▽, type: trans}
   magic:
   - [BT CLR, '', '&os_to_linux', '&os_to_macos', '', '']
-  - ['', '', '', BT CLR ALL, '', '']
+  - - ''
+    - ''
+    - {t: default, h: toggle}
+    - BT CLR ALL
+    - ''
+    - ''
   - ['', '', '', '', '', '']
   - ['', '', '', '', '', RGB SPI]
-  - [RGB SAI, RGB HUI, RGB BRI, RGB TOG, '', '']
-  - ['', '', '', '', '&bootloader', RGB SPD]
+  - - RGB SAI
+    - RGB HUI
+    - RGB BRI
+    - RGB TOG
+    - {t: number, h: toggle}
+    - {t: function, h: toggle}
+  - - {t: system, h: toggle}
+    - {t: cursor, h: toggle}
+    - {t: symbol, h: toggle}
+    - {t: mouse, h: toggle}
+    - '&bootloader'
+    - RGB SPD
   - [RGB SAD, RGB HUD, RGB BRD, RGB EFF, '', '']
   - ['', '', '', '&bootloader', '&sys_reset', '']
   - - ''
